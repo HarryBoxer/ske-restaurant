@@ -2,7 +2,7 @@ package code;
 import java.util.Scanner;
 public class restaurant {
 	
-			static int orde(int chs){
+			static int order(int chs){
 				
 				int price = 0 ;
 				if (chs == 1){
@@ -31,10 +31,10 @@ public class restaurant {
 			static void enQt(){
 				System.out.print("Enter Quantity: ");
 			}
-			static void tb(){
+			static void midTable(){
 				System.out.println("\n+------------------+---------+-----------+");
 			}
-			static void tk(){
+			static void thanks(){
 				System.out.print("\n---------------- THANKYOU -----------------");
 
 			}
@@ -124,7 +124,7 @@ public class restaurant {
 						System.out.println();
 						pc1 = pc1 + qt;
 						one = one + qt;
-						b1 = one * orde(se);
+						b1 = one * order(se);
 					}
 					if (se == 2) {
 						enQt();
@@ -132,7 +132,7 @@ public class restaurant {
 						System.out.println();
 						pc2 = pc2 + qt;
 						two = two + qt;
-						b2 = two * orde(se);
+						b2 = two * order(se);
 					}
 					if (se == 3) {
 						enQt();
@@ -140,7 +140,7 @@ public class restaurant {
 						System.out.println();
 						pc3 = pc3 + qt;
 						thr = thr + qt;
-						b3 = thr * orde(se);
+						b3 = thr * order(se);
 					}
 					if (se == 4) {
 						enQt();
@@ -148,29 +148,29 @@ public class restaurant {
 						System.out.println();
 						pc4 = pc4 + qt;
 						fou = fou + qt;
-						b4 = fou * orde(se);
+						b4 = fou * order(se);
 					}
 					if (se == 5) {
 						System.out.print("\n+------ Menu ------+-- Qty --+-- Price --+\n");
 						if (one >= 1) {
 							System.out.printf("| Pizza\t\t   |\t %3d |\t %7d |", pc1, b1);
-							tb();
+							midTable();
 						}
 						if (two >= 1) {
 							System.out.printf("| Chicken\t   |\t %3d |\t %7d |", pc2, b2);
-							tb();
+							midTable();
 						}
 						if (thr >= 1) {
 							System.out.printf("| Coke\t\t   |\t %3d |\t %7d |", pc3, b3);
-							tb();
+							midTable();
 						}
 						if (fou >= 1) {
 							System.out.printf("| SKESteak         |\t %3d |\t %7d |", pc4, b4);
-							tb();
+							midTable();
 						}
 						total = b1 + b2 + b3 + b4;
 						System.out.printf("| Total \t\t\t %7d |", total);
-						tb();
+						midTable();
 						System.out.println();
 					}
 					if (se == 6) {
@@ -182,11 +182,11 @@ public class restaurant {
 							count++;
 						} else if (in == total) {
 							System.out.print("\nNo Need To Change Back !\n");
-							tk();
+							thanks();
 							count++;
 						} else {
 							cash(total , in);
-							tk();
+							thanks();
 							count++;
 						}
 					}
