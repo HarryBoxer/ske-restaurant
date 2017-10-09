@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>Restaurant</name>
+=======
+	<name>GitHub_ske-restaurant</name>
+>>>>>>> a1512510b91c4df910fd13f7fbbaf5dc304164d3
 	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
+<<<<<<< HEAD
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
 			<arguments>
@@ -13,5 +18,9 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+=======
+	</buildSpec>
+	<natures>
+>>>>>>> a1512510b91c4df910fd13f7fbbaf5dc304164d3
 	</natures>
 </projectDescription>
