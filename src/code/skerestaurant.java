@@ -79,7 +79,6 @@ public class skerestaurant {
 	}
 
 	public static void main(String[] args) {
-
 		int menuOne = 0, menuTwo = 0, menuThree = 0, menuFour = 0;
 		int total = 0, count = 0;
 		int counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0;
