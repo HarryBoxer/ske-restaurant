@@ -1,0 +1,7 @@
+Coke;15
+Pepsi;15
+Sprite;15
+Coke zero;20
+Pepsi Free;20
+RootBeer;18
+Pure Fuel;199

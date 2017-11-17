@@ -1,5 +1,6 @@
 package code;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -10,27 +11,51 @@ import java.util.Scanner;
  * @author Sorrawit Tantharatana
  */
 
-public class skerestaurant {
+public class SkeRestaurant {
+	
 
-	static String[] menu = { "Pizza", "Chickens", "SKE Steak", "Coke" };
-	static int[] price = { 250, 120, 99, 45 };
-	static int[] quantity = { 0, 0, 0, 0 };
+	static String[] menu;
+	static double[] price;
+
 	static int[] bankMoney = { 1000, 500, 100, 50, 20, 10, 5, 2, 1 };
 
 	static Scanner sc = new Scanner(System.in);
 
-	static void pudMoney(double money, double tot) {
+	public static int[] getSumQuantity(int choice, int[] sumQuantity, int qty) {
+		if (choice >= 1 && choice <= menu.length) {
+			sumQuantity[choice - 1] += qty;
+		}
+		return sumQuantity;
+	}
+
+	public static double[] getSumPrice(int choice, double[] sumPrice, int qty) {
+		if (choice >= 1 && choice <= menu.length) {
+			sumPrice[choice - 1] += qty * price[choice - 1];
+		}
+		return sumPrice;
+	}
+
+	public static double getTotal(int[] sumQuantity) {
+		double total = 0.0;
+		for (int x = 0; x < menu.length; x++) {
+			total += sumQuantity[x] * price[x];
+		}
+		return total;
+	}
+
+	public static void pudMoney(double money, double tot) {
 
 		for (int i = 0; i < bankMoney.length; i++) {
-			if(i<5) {
+			if (i < 5) {
 				if ((int) Math.floor(money / bankMoney[i]) > 0) {
-					System.out.printf("\t%d\tBaht banknotes\t= %d\n ", bankMoney[i], (int) Math.floor(money / bankMoney[i]));
+					System.out.printf("\t%d\tBaht banknote\t= %d\n ", bankMoney[i],
+							(int) Math.floor(money / bankMoney[i]));
 					tot += Math.floor(money / bankMoney[i]);
 					money = money % bankMoney[i];
 				}
-			}else {
+			} else {
 				if ((int) Math.floor(money / bankMoney[i]) > 0) {
-					System.out.printf("\t%d\tBaht coin\t= %d\n ", bankMoney[i],(int) Math.floor(money / bankMoney[i]));
+					System.out.printf("\t%d\tBaht coin\t= %d\n ", bankMoney[i], (int) Math.floor(money / bankMoney[i]));
 					tot += Math.floor(money / bankMoney[i]);
 					money = money % bankMoney[i];
 				}
@@ -38,36 +63,37 @@ public class skerestaurant {
 		}
 	}
 
-	static void printMenu() {
+	public static void printMenu() {
 		System.out.println("\n---------- Welcome to SKE Restaurant ----------\n");
 		for (int i = 0; i < menu.length; i++) {
-			System.out.printf("%d.) %s\t\t%d Baht. \n", i + 1, menu[i], price[i]);
+			System.out.printf("%d.) %-24s%.2f\tBaht. \n", i + 1, menu[i], price[i]);
 		}
 		System.out.printf("%d.) Total\n", menu.length + 1);
 		System.out.printf("%d.) CashIn & Exit\n", menu.length + 2);
+		System.out.println("-----------------------------------------------");
 	}
 
-	static int enterChoice() {
+	public static int enterChoice() {
 		System.out.print("Enter Your Choice: ");
 		int chc = sc.nextInt();
 		return chc;
 	}
 
-	static int enterQuantity() {
+	public static int enterQuantity() {
 		System.out.print("Enter Quantity: ");
 		int qty = sc.nextInt();
 		return qty;
 	}
 
-	static void midTable() {
+	public static void midTable() {
 		System.out.println("\n+------------------+---------+-----------+");
 	}
 
-	static void thanks() {
+	public static void thanks() {
 		System.out.print("\n---------------- THANKYOU -----------------");
 	}
 
-	static void cash(double tot, double in) {
+	public static void cash(double tot, double in) {
 
 		System.out.printf("Cash OUT\n");
 		double money = in - tot;
@@ -79,76 +105,59 @@ public class skerestaurant {
 	}
 
 	public static void main(String[] args) {
-		int menuOne = 0, menuTwo = 0, menuThree = 0, menuFour = 0;
-		int total = 0, count = 0;
-		int counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0;
+		RestaurantManager.readFile();
+		menu = RestaurantManager.getMenuItems();
+		price = RestaurantManager.getPrices();
+		int[] sumQuantity = new int[menu.length];
+		double[] sumPrice = new double[price.length];
+
+		int qty = 0, select = 0;
+		double total = 0;
 
 		printMenu();
 
-		do {
+		while (true) {
 			System.out.println();
-			int select = enterChoice();
-			if (select == 1) {
+			select = enterChoice();
 
-				quantity[0] += enterQuantity();
-				menuOne += quantity[0];
-				counter1 = menuOne * price[0];
+			if (select >= 1 && select <= menu.length) {
+				qty = enterQuantity();
+				sumQuantity = getSumQuantity(select, sumQuantity, qty);
+				sumPrice = getSumPrice(select, sumPrice, qty);
+//				System.out.println(Arrays.toString(sumQuantity));
+//				System.out.println(Arrays.toString(sumPrice));
+
 			}
-			if (select == 2) {
-				quantity[1] += enterQuantity();
-				menuTwo += quantity[1];
-				counter2 = menuTwo * price[1];
-			}
-			if (select == 3) {
-				quantity[2] += enterQuantity();
-				menuThree += quantity[2];
-				counter3 = menuThree * price[2];
-			}
-			if (select == 4) {
-				quantity[3] += enterQuantity();
-				menuFour += quantity[3];
-				counter4 = menuFour * price[3];
-			}
-			if (select == 5) {
+			if (select == menu.length + 1) {
 				System.out.print("\n+------ Menu ------+-- Qty --+-- Price --+\n");
-				if (menuOne >= 1) {
-					System.out.printf("| Pizza\t\t   |\t %3d |\t %7d |", quantity[0], counter1);
-					midTable();
+				for (int x = 0; x < menu.length; x++) {
+					if (sumQuantity[x] >= 1) {
+						System.out.printf("| %-17s|\t%3d  |\t %7.2f |", menu[x], sumQuantity[x], sumPrice[x]);
+						midTable();
+					}
 				}
-				if (menuTwo >= 1) {
-					System.out.printf("| Chicken\t   |\t %3d |\t %7d |", quantity[1], counter2);
-					midTable();
-				}
-				if (menuThree >= 1) {
-					System.out.printf("| Coke\t\t   |\t %3d |\t %7d |", quantity[2], counter3);
-					midTable();
-				}
-				if (menuFour >= 1) {
-					System.out.printf("| SKESteak         |\t %3d |\t %7d |", quantity[3], counter4);
-					midTable();
-				}
-				total = counter1 + counter2 + counter3 + counter4;
-				System.out.printf("| Total \t\t\t\t %7d |", total);
+				total = getTotal(sumQuantity);
+				System.out.printf("| Total \t\t\t\t %7.2f |", total);
 				midTable();
 				System.out.println();
 			}
-			if (select == 6) {
-				total = counter1 + counter2 + counter3 + counter4;
-				System.out.printf("Cash IN\t\t ");
+			if (select == menu.length + 2) {
+				total = getTotal(sumQuantity);
+				System.out.printf("\nCash IN\t\t ");
 				double in = sc.nextDouble();
 				if (in < total) {
 					System.out.printf("NOT ENOUGH MONEY!");
-					count++;
+					break;
 				} else if (in == total) {
 					System.out.print("\nNo Need To Change Back !\n");
 					thanks();
-					count++;
+					break;
 				} else {
 					cash(total, in);
 					thanks();
-					count++;
+					break;
 				}
 			}
-		} while (count <= 0);
+		}
 	}
 }
